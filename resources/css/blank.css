@@ -1,0 +1,32 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: gray;
+}
+
+.header {
+    flex: 0 1 60px;
+    background-color: white;
+}
+
+.footer {
+    flex: 0 1 120px;
+    background-color: white;
+}
+
+.menu {
+    height: 60px;
+    width: 100%;
+    outline: 1px solid black;
+}
+
+.category {
+
+}
+
+.container {
+    flex: 1 1 100%;
+    background-color: lightgray;
+}
