@@ -19,7 +19,13 @@ use App\Http\Controllers\NewsControler;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+//    return view('welcome');
+//    return response()->download('robots.txt');
+//    return redirect()->route('news');
+    return response()->json([
+        'title' => 'Example',
+        'description' => 'ExampleDescription'
+    ]);
 });
 
 //admin
@@ -30,6 +36,7 @@ Route::group(
     ]
     ,function()
     {
+        Route::view('/','admin.index');
         Route::resource('category', AdminCategoryController::class);
         Route::resource('news', AdminNewsController::class);
     }
@@ -45,6 +52,7 @@ Route::get('/news/show/{id}', [NewsControler::class, 'show'])
     ->where('id', '\d+')
     ->name('news.show');
 
+Route::view('/contact', 'contact');
 /*
 Route::get('/hi/{name}', function(string $name) {
    return "Hello, {$name}";
