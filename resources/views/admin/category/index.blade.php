@@ -32,12 +32,12 @@
                     @foreach ($categoryList as &$category)
 
                         <tr>
-                            <td>{{ $loop->index }}</td>
-                            <td>{{ $category['title'] }}</td>
-                            <td>{{ $category['description'] }}</td>
-                            <td>{{ now()->format('d-m-Y H:i') }}</td>
+                            <td>{{ $category->id }}</td>
+                            <td>{{ $category->title }}</td>
+                            <td>{{ $category->description }}</td>
+                            <td>{{ $category->created_at }}</td>
                             <td>
-                                <a href="{{ route('admin.category.edit', ['category' => $loop->index]) }}" style="font-size: 12px;">Ред.</a> &nbsp; | &nbsp;
+                                <a href="{{ route('admin.category.edit', ['category' => $category->id]) }}" style="font-size: 12px;">Ред.</a> &nbsp; | &nbsp;
                                 <a href="javascript:;" style="font-size: 12px; color: red">Уд.</a>
                             </td>
                         </tr>
