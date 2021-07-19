@@ -5,33 +5,23 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use function GuzzleHttp\Promise\all;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        $categoryModel = new Category();
-        $categories = $categoryModel->getCategories();
-
-        //dd(
-//        $categories = \DB::table('categories')
-//            ->join('news', 'categories.id', '=', 'news.category_id')
-//            ->select(['news.*', 'categories.title as categoryTitle', 'categories.description as categoryDescription',
-//                'categories.color as categoryColor'])
-            /*->where([
-                ['news.id', '>', 5],
-                ['categories.id', '<>', 1]
-            ])
-            ->Orwhere('news.title', 'like', '%'. request()->query('q').'%')*/
-//            ->whereBetween('news.id', [1,7])
-//            ->whereDate('news.created_at', '>=', now('	Pacific/Honolulu'))
-//            ->get();
-        //);
+        $categories = Category::with('news')
+//            ->whereHas('news', function($query) {
+//                $query->where('');
+//            })
+            ->orderBy('id','desc')
+            ->get();
 
         return view('admin.category.index', [
             'categoryList' => $categories
@@ -41,7 +31,7 @@ class CategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
@@ -52,11 +42,24 @@ class CategoryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => ['required', 'string']
+        ]);
+
+        $category = Category::create(
+            $request->only(['title', 'color', 'description'])
+        );
+
+        if ($category) {
+            return redirect()->route('admin.category.index')
+                ->with('success', 'Запись успешно создана');
+        }
+
+        return back()->with('error', 'Не удалось создать зпись');
     }
 
     /**
@@ -74,32 +77,43 @@ class CategoryController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit(Category $category)
     {
-        dd($category);
+        return view('admin.category.edit', [
+           'category' => $category
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param Category $category
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $statusCategory = $category->fill(
+            $request->only(['title', 'color', 'description'])
+        )->save();
+
+        if ($statusCategory) {
+            return redirect()->route('admin.category.index')
+                ->with('success', 'Запись успешно обновлена');
+        }
+
+        return back()->with('error', 'Не удалось обновить зпись');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Category $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
         //
     }

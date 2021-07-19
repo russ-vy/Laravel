@@ -8,18 +8,29 @@
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item active">Добавить новую новость</li>
             </ol>
-            @if($errors->any())
-                @foreach($errors->all() as $error)
-                    <div class="alert alert-danger">{{ $error }}</div>
-                @endforeach
-            @endif
+
+            <x-error></x-error>
 
             <div>
                 <form method="post" action="{{ route('admin.news.store')  }}">
                     @csrf
                     <div class="form-group">
+                        <label for="category">Категория</label>
+                        <select class="form-control" name="category_id" id="category">
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" @if(old('category_id') === $category->id) selected @endif>
+                                    {{ $category->title }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div><br>
+                    <div class="form-group">
                         <label for="title">Заголовок</label>
                         <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">
+                    </div><br>
+                    <div class="form-group">
+                        <label for="image">Изображение</label>
+                        <input type="file" class="form-control" id="image" name="image">
                     </div><br>
                     <div class="form-group">
                         <label for="status">Статус</label>

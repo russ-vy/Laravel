@@ -48,25 +48,15 @@ Route::get('/category/{id}', [CategoryController::class, 'show'])
     ->name('category.id');
 
 Route::get('/news', [NewsControler::class, 'index'])->name('news');
-Route::get('/news/show/{id}', [NewsControler::class, 'show'])
-    ->where('id', '\d+')
+Route::get('/news/{news}', [NewsControler::class, 'show'])
+    ->where('news', '\d+')
     ->name('news.show');
 
 Route::view('/contact', 'contact');
-/*
-Route::get('/hi/{name}', function(string $name) {
-   return "Hello, {$name}";
-});
 
-Route::get('/welcome/{name}', function(string $name) {
-    return "Welcome, {$name}";
-});
 
-Route::get('/information', function() {
-    return "Information page";
+Route::get('collection', function() {
+    $collection = collect([
+        1,2,3,4,5,6,7,8,45,6,54,3,43,65
+    ]);
 });
-
-Route::get('/news/{id}', function(string $id) {
-    return "Return page {$id}";
-});
-*/

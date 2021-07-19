@@ -9,13 +9,14 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
+                @include('inc.message')
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                     <tr>
                         <th>#ID</th>
                         <th>Заголовок</th>
                         <th>Описание</th>
-                        <th>Дата добавления</th>
+                        <th>Дата обновления</th>
                         <th>Управление</th>
                     </tr>
                     </thead>
@@ -24,7 +25,7 @@
                         <th>#ID</th>
                         <th>Заголовок</th>
                         <th>Описание</th>
-                        <th>Дата добавления</th>
+                        <th>Дата обновления</th>
                         <th>Управление</th>
                     </tr>
                     </tfoot>
@@ -33,9 +34,9 @@
 
                         <tr>
                             <td>{{ $category->id }}</td>
-                            <td>{{ $category->title }}</td>
+                            <td>{{ $category->title }} ({{ optional($category->news)->count() }})</td>
                             <td>{{ $category->description }}</td>
-                            <td>{{ $category->created_at }}</td>
+                            <td>{{ $category->updated_at }}</td>
                             <td>
                                 <a href="{{ route('admin.category.edit', ['category' => $category->id]) }}" style="font-size: 12px;">Ред.</a> &nbsp; | &nbsp;
                                 <a href="javascript:;" style="font-size: 12px; color: red">Уд.</a>

@@ -9,13 +9,14 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
+                @include('inc.message')
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                     <tr>
                         <th>#ID</th>
                         <th>Заголовок</th>
                         <th>Описание</th>
-                        <th>Дата добавления</th>
+                        <th>Дата обновления</th>
                         <th>Управление</th>
                     </tr>
                     </thead>
@@ -24,7 +25,7 @@
                         <th>#ID</th>
                         <th>Заголовок</th>
                         <th>Описание</th>
-                        <th>Дата добавления</th>
+                        <th>Дата обновления</th>
                         <th>Управление</th>
                     </tr>
                     </tfoot>
@@ -35,7 +36,7 @@
                             <td>{{ $news->id }}</td>
                             <td>{{ $news->title }}</td>
                             <td>{{ $news->description }}</td>
-                            <td>{{ $news->created_at }}</td>
+                            <td>{{ $news->updated_at }}</td>
                             <td>
                                 <a href="{{ route('admin.news.edit', ['news' => $news->id]) }}" style="font-size: 12px;">Ред.</a> &nbsp; | &nbsp;
                                 <a href="javascript:;" style="font-size: 12px; color: red">Уд.</a>

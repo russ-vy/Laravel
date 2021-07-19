@@ -5,22 +5,22 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @method static create(array $data)
+ */
 class News extends Model
 {
     protected $table = "news";
 
-    public function getNews()
+    protected $fillable = [
+        'category_id', 'title', 'status', 'image', 'slug', 'description'
+    ];
+
+    public function category(): BelongsTo
     {
-//        return \DB::select("select id, title, description, color, created_at from {$this->table}");
-        return \DB::table($this->table)
-            ->select(['id', 'title', 'slug', 'description', 'created_at'])
-            ->get();
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
-    public function getNewsId(int $id)
-    {
-        return \DB::table($this->table)
-            ->find(id);
-    }
 }
