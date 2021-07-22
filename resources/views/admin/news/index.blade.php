@@ -39,7 +39,7 @@
                             <td>{{ $news->updated_at }}</td>
                             <td>
                                 <a href="{{ route('admin.news.edit', ['news' => $news->id]) }}" style="font-size: 12px;">Ред.</a> &nbsp; | &nbsp;
-                                <a href="javascript:;" style="font-size: 12px; color: red">Уд.</a>
+                                <a href="javascript:;" class="delete" rel="{{ $news->id }}" style="font-size: 12px; color: red">Уд.</a>
                             </td>
                         </tr>
 
@@ -51,3 +51,24 @@
     </div>
 
 @endsection
+
+{{--@push('js') - почему-то отказывается работать, а без него все отлично --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+    <script>
+        $(function() {
+            $(".delete").on('click', function() {
+                if(confirm("Подтверждаете удаление ?")) {
+                    $.ajax({
+                        type: 'DELETE'
+                        ,url: '/admin/news/' + $(this).attr('rel')
+                        ,headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+                        ,complete: () => {
+                            alert('Запись удалена')
+                            location.reload()
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+{{--@endpush--}}

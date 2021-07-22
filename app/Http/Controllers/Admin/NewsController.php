@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NewsUpdate;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-//use Illuminate\Support\Str;
+use Illuminate\Support\Str;
 
 class NewsController extends Controller
 {
@@ -45,14 +46,10 @@ class NewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(NewsUpdate $request)
     {
-        $request->validate([
-            'title' => ['required', 'string']
-        ]);
-
-        $data = $request->only(['category_id', 'title', 'status', 'description']);
-        $data['slug'] = \Str::slug($data['title']);
+        $data = $request->validated();
+        $data['slug'] = Str::slug($data['title']);
 
         $news = News::create($data);
 
@@ -97,9 +94,9 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, News $news)
+    public function update(NewsUpdate $request, News $news)
     {
-        $data = $request->only(['categoty_id', 'title', 'status', 'description']);
+        $data = $request->validated();
         $data['slug'] = \Str::slug($data['title']);
 
         $statusNews = $news->fill($data)->save();
@@ -118,8 +115,14 @@ class NewsController extends Controller
      * @param News $news
      * @return \Illuminate\Http\Response
      */
-    public function destroy(News $news)
+    public function destroy(Request $request, News $news)
     {
-        //
+        if ($request->ajax()) {
+            try {
+                $news->delete();
+            } catch (\Exception $e) {
+                report($e);
+            }
+        }
     }
 }

@@ -28,6 +28,15 @@
                     <div class="form-group">
                         <label for="title">Заголовок</label>
                         <input type="text" class="form-control" id="title" name="title" value="{{ $news->title }}">
+
+                        @if($errors->has('title'))
+                            <div class="alert alert-danger">
+                                @foreach($errors->get('title') as $error)
+                                    <p style="margin-bottom: 0;">{{ $error }}</p>
+                                @endforeach
+                            </div>
+                        @endif
+
                     </div><br>
                     <div class="form-group">
                         <label for="image">Изображение</label>

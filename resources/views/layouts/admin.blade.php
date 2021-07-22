@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@section('title') Admin @show</title>
 
@@ -49,7 +50,7 @@
         <!-- End of Main Content -->
 
         <!-- Footer -->
-        <xadmin.footer></xadmin.footer>
+        <x-admin.footer></x-admin.footer>
         <!-- End of Footer -->
 
     </div>
@@ -92,13 +93,6 @@
 
 <!-- Custom scripts for all pages-->
 <script src="{{ asset('assets/admin/js/sb-admin-2.min.js') }}"></script>
-
-<!-- Page level plugins -->
-<script src="{{ asset('assets/admin/vendor/chart.js/Chart.min.js') }}"></script>
-
-<!-- Page level custom scripts -->
-<script src="{{ asset('assets/admin/js/demo/chart-area-demo.js') }}"></script>
-<script src="{{ asset('assets/admin/js/demo/chart-pie-demo.js') }}"></script>
 
 </body>
 
