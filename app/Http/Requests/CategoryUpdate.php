@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class NewsStore extends FormRequest
+class CategoryUpdate extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +25,8 @@ class NewsStore extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'min:3', 'max:199']
-            ,'category_id' => ['required', 'integer', 'min:1']
-            ,'status' => ['required']
-            ,'image' => ['sometimes']
             ,'description' => ['sometimes']
+            ,'color' => ['sometimes']
         ];
     }
 }

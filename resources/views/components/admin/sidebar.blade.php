@@ -26,7 +26,6 @@
         Interface
     </div>
 
-    <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.category.index') }}">
             <i class="fas fa-fw fa-cog"></i>
@@ -34,11 +33,17 @@
         </a>
     </li>
 
-    <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('admin.news.index') }}">
             <i class="fas fa-fw fa-wrench"></i>
             <span>Новости</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('admin.user.index') }}">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Пользователи</span>
         </a>
     </li>
 
@@ -60,13 +65,12 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Login Screens:</h6>
-                <a class="collapse-item" href="login.html">Login</a>
-                <a class="collapse-item" href="register.html">Register</a>
-                <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                <a class="collapse-item" href="/login">Login</a>
+                <a class="collapse-item" href="/register">Register</a>
+                <a class="collapse-item" href="/password/reset">Forgot Password</a>
                 <div class="collapse-divider"></div>
                 <h6 class="collapse-header">Other Pages:</h6>
-                <a class="collapse-item" href="404.html">404 Page</a>
-                <a class="collapse-item" href="blank.html">Blank Page</a>
+                <a class="collapse-item" href="/404">404 Page</a>
             </div>
         </div>
     </li>

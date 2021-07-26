@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NewsStore;
 use App\Http\Requests\NewsUpdate;
 use App\Models\Category;
 use App\Models\News;
@@ -46,7 +47,7 @@ class NewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(NewsUpdate $request)
+    public function store(NewsStore $request)
     {
         $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
