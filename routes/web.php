@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\SocialController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
@@ -8,6 +10,7 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use \App\Http\Controllers\Account\IndexController as AccountController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsControler;
+use \App\Http\Controllers\Admin\ParserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +22,7 @@ use App\Http\Controllers\NewsControler;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*
 Route::get('/', function () {
 //    return view('welcome');
 //    return response()->download('robots.txt');
@@ -47,7 +50,9 @@ Route::get('session', function (){
 
     return 'Сессий нет';
 });
+*/
 
+Route::get('/', [NewsControler::class, 'index'])->name('news');
 
 //site
 Route::get('/category', [CategoryController::class, 'index'])->name('category');
@@ -65,9 +70,10 @@ Route::view('/contact', 'contact');
 
 //backoffice
 Route::group(['middleware' => 'auth'], function (){
-    Route::get('/account', AccountController::class);
+    Route::get('/account', AccountController::class)
+        ->name('account');
     Route::get('/logout', function (){
-       \Auth::logout();
+       Auth::logout();
        return redirect()->route('login');
     })->name('logout');
 
@@ -80,14 +86,25 @@ Route::group(['middleware' => 'auth'], function (){
         ]
         ,function()
         {
-            Route::view('/','admin.index')->name('index');
+            Route::view('/','admin.index')
+                ->name('index');
             Route::resource('category', AdminCategoryController::class);
             Route::resource('news', AdminNewsController::class);
             Route::resource('user', AdminUserController::class);
+
+            Route::get('/parse', ParserController::class);
         }
     );
 });
 
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/init/{driver?}', [SocialController::class, 'init'])
+        ->name('social.init');
+    Route::get('/callback/{driver?}', [SocialController::class, 'callback'])
+        ->name('social.callback');
+});
+
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
+    ->name('home');
