@@ -19,6 +19,8 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('assets/admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
+    <script src="//cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+
 </head>
 
 <body id="page-top">

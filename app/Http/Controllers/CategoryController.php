@@ -9,8 +9,8 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $category = Category::orderBy('id', 'desc')
-//            ->with('news')
+        $category = Category::with('news')
+            ->orderBy('id', 'desc')
             ->paginate(10);
 
         return view('category.index', [

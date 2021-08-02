@@ -12,7 +12,7 @@
             <x-error></x-error>
 
             <div>
-                <form method="post" action="{{ route('admin.news.update', ['news' => $news]) }}">
+                <form method="post" action="{{ route('admin.news.update', ['news' => $news]) }}" enctype="multipart/form-data">
                     @csrf
                     @method('put')
                     <div class="form-group">
@@ -60,4 +60,28 @@
                 </form><br>
             </div>
         </div>
+
+        {{--@push('js')--}}
+        <script>
+            let options = {
+                filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+                filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+                filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+                filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+            }
+
+            CKEDITOR.replace('description', options)
+
+            // ClassicEditor
+            //     .create( document.querySelector( '#description' ) )
+            //     .then( editor => {
+            //         console.log( editor )
+            //     } )
+            //     .catch( error => {
+            //         console.error( error )
+            //     } )
+        </script>
+        {{--@endpush--}}
+
+    </main>
 @endsection

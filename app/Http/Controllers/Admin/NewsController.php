@@ -100,6 +100,14 @@ class NewsController extends Controller
         $data = $request->validated();
         $data['slug'] = \Str::slug($data['title']);
 
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+
+            $newFileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
+
+            $data['image'] = $file->storeAs('news', $newFileName, 'public');
+        }
+
         $statusNews = $news->fill($data)->save();
 
         if ($statusNews) {

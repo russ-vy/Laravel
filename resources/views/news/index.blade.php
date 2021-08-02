@@ -12,13 +12,16 @@
                             <h2 class="post-title">
                                 {{ $news->title }}
                             </h2>
+                            @if($news->image)
+                                <img src="{{ Storage::disk('public')->url($news->image) }}" style="width: 130px;">
+                            @endif
                             <h3 class="post-subtitle">
                                 {!! $news->description !!}
                             </h3>
                         </a>
                         <p class="post-meta">
                             <strong>Категория: {{ optional($news->category)->title }}</strong><br>
-                            <a href="#">Author</a>
+                            <a href="#">Author</a><br>
                             {{ $news->created_at->format('d-m-Y H:i') }}
                         </p>
                     </div>

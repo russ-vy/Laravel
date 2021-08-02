@@ -10,8 +10,6 @@ use Orchestra\Parser\Xml\Facade as XmlParser;
 class ParserService implements Parser
 {
 
-
-
     public function getParsedList(string $url): array
     {
         $xml = XmlParser::load($url);
@@ -35,4 +33,13 @@ class ParserService implements Parser
         return $data;
     }
 
+    public function saveNewsInFile(string $url): void
+    {
+        $parsedList = $this->getParsedList($url);
+        $serialize = json_encode($parsedList);
+        $explode = explode("/", $url);
+        $fileName = end($explode);
+
+        \Storage::append('/news/' . $fileName, $serialize);
+    }
 }
